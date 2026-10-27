@@ -10,13 +10,13 @@ export class BooksController {
     @Get()
     getAllBooks() {
         //logic untuk mengambil semua data buku dari database atau sumber data lainnya
-        return this.booksService.findAll();
+        return this.booksService.findAll('');
     }
     //mengambil data buku berdasarkan id
     @Get(':id')
     getBookById(@Param('id') id: string) {
         //logic untuk mengambil data buku berdasarkan id dari database atau sumber data lainnya
-        return this.booksService.findOne(Number(id));
+        return this.booksService.findOne((id));
     }
 
     //menyimpan data buku baru
@@ -31,13 +31,13 @@ export class BooksController {
     @Put(':id')
     updateBook(@Param('id') id: string, @Body() book: CreateBookDto) {
         //logic untuk mengupdate data buku berdasarkan id di database atau sumber data lainnya
-        return this.booksService.update(Number(id), book);
+        return this.booksService.update((id), book);
     }
 
     //menghapus data buku berdasarkan id
     @Delete(':id')
     deleteBook(@Param('id') id: string): boolean {
-        return this.booksService.remove(Number(id));
+        return this.booksService.remove((id));
     }
 
 }
