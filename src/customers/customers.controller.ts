@@ -1,38 +1,75 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CustomersService } from './customers.service.js';
 import { CreateCustomerDto } from './dto/create-customer.dto.js';
+import { CreateCustomerAddressDto } from './dto/create-customer-address.dto.js';
 
 @Controller('customers')
 export class CustomersController {
-    constructor(private customersService: CustomersService) {}
+    constructor(private readonly customersService: CustomersService) {}
 
-    //menampilkan semua data customer
     @Get()
     getAllCustomers() {
         return this.customersService.findAll();
     }
 
-    //mengambil data customer berdasarkan id
     @Get(':id')
     getCustomerById(@Param('id') id: string) {
         return this.customersService.findOne(id);
     }
 
-    //menyimpan data customer baru
+
     @Post()
     createCustomer(@Body() customer: CreateCustomerDto) {
         return this.customersService.create(customer);
     }
 
-    //mengupdate data customer berdasarkan id
     @Put(':id')
     updateCustomer(@Param('id') id: string, @Body() customer: CreateCustomerDto) {
         return this.customersService.update(id, customer);
     }
 
-    //menghapus data customer berdasarkan id
-    @Delete(':id')
     deleteCustomer(@Param('id') id: string) {
         return this.customersService.delete(id);
+    }
+
+
+    @Get(':id/addresses')
+    getCustomerAddresses(@Param('id') customerId: string) {
+        return this.customersService.findAllAddresses(customerId);
+    }
+
+    
+    @Get(':id/addresses/:addressId')
+    getCustomerAddressById(
+        @Param('id') customerId: string,
+        @Param('addressId') addressId: string,
+    ) {
+        return this.customersService.findOneAddress(customerId, addressId);
+    }
+
+    
+    @Post(':id/addresses')
+    createCustomerAddress(
+        @Param('id') customerId: string,
+        @Body() createAddressDto: CreateCustomerAddressDto,
+    ) {
+        return this.customersService.createAddress(customerId, createAddressDto);
+    }
+
+    @Put(':id/addresses/:addressId')
+    updateCustomerAddress(
+        @Param('id') customerId: string,
+        @Param('addressId') addressId: string,
+        @Body() updateAddressDto: CreateCustomerAddressDto,
+    ) {
+        return this.customersService.updateAddress(customerId, addressId, updateAddressDto);
+    }
+
+    @Delete(':id/addresses/:addressId')
+    deleteCustomerAddress(
+        @Param('id') customerId: string,
+        @Param('addressId') addressId: string,
+    ) {
+        return this.customersService.deleteAddress(customerId, addressId);
     }
 }

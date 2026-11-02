@@ -1,4 +1,5 @@
-import {Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { Category } from "../../categories/entities/category-entities.js";
 
 @Entity('books')
 export class Book{
@@ -20,6 +21,17 @@ export class Book{
     @Column({type:'boolean', default:true})
     isAvailable: boolean;
 
+    @Column({type:'uuid', name:'category_id', nullable:true})
+    categoryId: string;
+
+
+    @ManyToOne(() => Category, (category) => category.books, {
+        onDelete: 'SET NULL',
+        nullable: true
+    })
+    @JoinColumn({name: 'category_id'})
+    category: Category;
+
     @CreateDateColumn({name: 'created_at'})
     createdAt: Date;
 
@@ -29,4 +41,3 @@ export class Book{
     @DeleteDateColumn({name:'deleted_at', nullable:true})
     deletedAt: Date;
 }
-

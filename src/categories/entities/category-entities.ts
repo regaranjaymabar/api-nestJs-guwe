@@ -1,4 +1,5 @@
-import {Column,CreateDateColumn,DeleteDateColumn,Entity,PrimaryGeneratedColumn,UpdateDateColumn,} from 'typeorm';
+import {Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import { Book } from '../../books/entities/book-entity.js';
 
 @Entity('categories')
 export class Category {
@@ -16,4 +17,7 @@ export class Category {
 
     @DeleteDateColumn({ name: 'deleted_at', nullable: true })
     deletedAt: Date;
+
+    @OneToMany(() => Book, (book) => book.category)
+    books: Book[];
 }
