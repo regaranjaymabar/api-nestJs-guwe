@@ -11,16 +11,20 @@ export class CategoriesService {
         private readonly categoryRepository: Repository<Category>
     ){}
 
-    //menampilkan semua data kategori dari db
+    //menampilkan semua data kategori dari db beserta daftar bukunya
     async findAll(): Promise<Category[]> {
         return await this.categoryRepository.find({
+            relations: { books: true },
             order: { createdAt: 'DESC' }
         });
     }
 
-    //menampilkan data kategori berdasarkan id dari db
+    //menampilkan data kategori berdasarkan id dari db beserta daftar bukunya
     async findOne(id: string): Promise<Category> {
-        const category = await this.categoryRepository.findOneBy({ id });
+        const category = await this.categoryRepository.findOne({
+            where: { id },
+            relations: { books: true }
+        });
 
         if (!category) {
             throw new NotFoundException('kategori tidak ditemukan');

@@ -1,5 +1,5 @@
 import { IsUUID } from "class-validator";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Customer } from "./customer-entity.js";
 
 @Entity('customeraddress')
@@ -27,10 +27,10 @@ export class CustomerAddress{
     @Column({type:'varchar', length:10, name:'postal_code'})
     postalCode:string;
 
-    @Column({type:'timestamp', name:'created_at'})
+    @CreateDateColumn({name: 'created_at'})
     createdAt:Date;
 
-    @Column({type:'timestamp', name:'updated_at'})
+    @UpdateDateColumn({name: 'updated_at'})
     updatedAt:Date;
 
     // Relasi ke customer (banyak address bisa dimiliki 1 customer yang sama)

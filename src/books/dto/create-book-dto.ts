@@ -1,4 +1,4 @@
-import {IsInt, IsNotEmpty} from 'class-validator';
+import {IsInt, IsNotEmpty, IsOptional, IsUUID} from 'class-validator';
 
 export class CreateBookDto {
     @IsNotEmpty({message: 'nama perlu diisi'})
@@ -13,4 +13,8 @@ export class CreateBookDto {
     @IsInt({message: 'tahun terbit harus berupa angka'})
     @IsNotEmpty({message: 'tahun terbit perlu diisi'})
     readonly publishedYear: number;
+
+    @IsOptional()
+    @IsUUID('4', { message: 'Category ID harus berupa UUID valid!' })
+    readonly categoryId?: string;
 }
