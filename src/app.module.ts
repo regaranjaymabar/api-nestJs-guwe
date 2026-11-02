@@ -6,6 +6,10 @@ import { AuthModule } from './auth/auth.module.js';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CategoriesModule } from './categories/categories.module.js';
+import { CustomersModule } from './customers/customers.module.js';
+import { ControlerController } from './controler/controler.controller.js';
+import { ServiceService } from './service/service.service.js';
 
 @Module({
   imports: [
@@ -40,10 +44,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
         synchronize: ConfigService.get<string>('NODE_ENV') === 'development'
       })
-    })
+    }),
+    
+    CategoriesModule,
+    CustomersModule
   
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, ControlerController],
+  providers: [AppService, ServiceService],
 })
 export class AppModule {}
